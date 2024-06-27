@@ -14,5 +14,10 @@
         "host": "localhost",
         "port": 5432,
         "database": "postgres"
+    },
+    "security": {
+        "jwt_secret": "",
+        "algorithm": "HS256",
+        "token_expire_minutes": 60
     }
 }
