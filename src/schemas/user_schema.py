@@ -26,6 +26,7 @@ class UpdateUserSchema(BaseUserSchema):
 
 
 class GetUserSchema(BaseUserSchema):
+    id: int
     user_uuid: Optional[UUID] = None
     created_on: Optional[datetime] = None
     updated_on: Optional[datetime] = None
