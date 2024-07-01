@@ -5,7 +5,10 @@ from uuid import UUID
 from typing import Optional
 
 from pydantic import BaseModel
+from pydantic import field_validator
 from pydantic import EmailStr
+
+from core.security import generate_hash
 
 
 class BaseUserSchema(BaseModel):
@@ -18,6 +21,11 @@ class CreateUserSchema(BaseUserSchema):
     user_password: str
 
 
+    @field_validator("user_password", mode='before')
+    def hash_password(cls, value) -> str:
+        return generate_hash(value)
+
+
 class UpdateUserSchema(BaseUserSchema):
     user_name: Optional[str]
     user_password: Optional[str]
@@ -27,7 +35,7 @@ class UpdateUserSchema(BaseUserSchema):
 
 class GetUserSchema(BaseUserSchema):
     id: int
-    user_uuid: Optional[UUID] = None
-    created_on: Optional[datetime] = None
+    user_uuid: UUID
+    created_on: datetime
     updated_on: Optional[datetime] = None
 
