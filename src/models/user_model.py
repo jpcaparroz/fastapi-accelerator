@@ -15,8 +15,8 @@ from core.config import settings
 class UserModel(settings.DBBaseModel):
     __tablename__ = 'user'
     
-    id = Column(Integer(), autoincrement=True, unique=True, nullable=False)
-    user_uuid = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    id = Column(Integer(), primary_key=True, autoincrement=True, unique=True)
+    user_uuid = Column(UUID(as_uuid=True), default=uuid4, unique=True)
     user_name = Column(String(256), nullable=False)
     user_email = Column(String(256), nullable=False, unique=True)
     user_password = Column(String(256), nullable=False)
