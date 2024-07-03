@@ -7,9 +7,9 @@ from sqlalchemy import update
 from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models.user_model import UserModel
-from schemas import user_schema as schemas
 from core.security import generate_hash
+from models.user_model import UserModel
+from schemas.user_schema import UpdateUserSchema
 
 
 # User
@@ -39,12 +39,9 @@ async def get_user_query(user_uuid: UUID, db: AsyncSession):
     return user
 
 
-async def update_user_query(user_uuid: UUID, updated_user: schemas.UpdateUserSchema, db: AsyncSession):
+async def update_user_query(user_uuid: UUID, updated_user: UpdateUserSchema, db: AsyncSession):
     async with db as session:
-        data = updated_user.model_dump(exclude_none=True, exclude_unset=True)
-        if data.get('user_password'):
-            data['user_password'] = generate_hash(updated_user.user_password)
-        
+        data = updated_user.model_dump(exclude_none=True, exclude_unset=True)        
         query = update(UserModel).where(UserModel.user_uuid == user_uuid).values(data)
         await session.execute(query)
         await session.commit()
