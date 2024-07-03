@@ -1,8 +1,9 @@
 from typing import ClassVar
 
 from pydantic_settings import BaseSettings
+from pydantic_settings import SettingsConfigDict
 
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy import URL
 
 from utils import get_config
@@ -18,10 +19,8 @@ class Settings(BaseSettings):
     JWT_SECRET: str = get_config('security', 'jwt_secret')
     ALGORITHM: str = get_config('security', 'algorithm')
     ACCESS_TOKEN_EXPIRE_MINUTES: int = get_config('security', 'token_expire_minutes')
-    
-    class Config:
-        # important to follow
-        case_sensitive = True
+
+    model_config = SettingsConfigDict(case_sensitive=True)
 
 
 settings: Settings = Settings()
