@@ -20,6 +20,7 @@ from models.user_model import UserModel
 from schemas.user_schema import CreateUserSchema
 from schemas.user_schema import GetUserSchema
 from schemas.user_schema import UpdateUserSchema
+from schemas.generic_schema import BaseLoginSchema
 from api.v1.data.crud import user_crud as crud
 from api.v1.data.template.user_template import UpdateUserBody
 from api.v1.data.template.user_template import CreateUserBody
@@ -28,7 +29,7 @@ from api.v1.data.template.user_template import CreateUserBody
 router = APIRouter()
 
 
-@router.post("/login", status_code=status.HTTP_200_OK)
+@router.post("/login", status_code=status.HTTP_200_OK, response_model=BaseLoginSchema)
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_session)):
     user = await authenticate(form_data.username, form_data.password, db)
     if not user:
@@ -62,16 +63,20 @@ async def get_users(db: AsyncSession = Depends(get_session)):
 async def get_user(user_uuid: UUID, db: AsyncSession = Depends(get_session)):
     response = await crud.get_user_query(user_uuid, db)
     if not response:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User not found')
+        raise HTTPException(status.HTTP_404_NOT_FOUND, 'User not found')
     
     return response
 
 
 @router.patch("/{user_uuid}", status_code=status.HTTP_202_ACCEPTED, response_model=GetUserSchema)
 async def update_user(user_uuid: UUID, user: UpdateUserSchema = UpdateUserBody, db: AsyncSession = Depends(get_session)):
-    response = await crud.update_user_query(user_uuid, user, db)
+    try:
+        response = await crud.update_user_query(user_uuid, user, db)
+    except IntegrityError:
+        raise HTTPException(status.HTTP_409_CONFLICT, 'User email conflict')
+
     if not response:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User not found')
-    
+        raise HTTPException(status.HTTP_404_NOT_FOUND, 'User not found')
+
     return response
 
