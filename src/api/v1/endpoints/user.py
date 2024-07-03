@@ -21,6 +21,7 @@ from schemas.user_schema import CreateUserSchema
 from schemas.user_schema import GetUserSchema
 from schemas.user_schema import UpdateUserSchema
 from schemas.generic_schema import BaseLoginSchema
+from schemas.generic_schema import HttpDetail
 from api.v1.data.crud import user_crud as crud
 from api.v1.data.template.user_template import UpdateUserBody
 from api.v1.data.template.user_template import CreateUserBody
@@ -79,4 +80,15 @@ async def update_user(user_uuid: UUID, user: UpdateUserSchema = UpdateUserBody, 
         raise HTTPException(status.HTTP_404_NOT_FOUND, 'User not found')
 
     return response
+
+
+@router.delete("/{user_uuid}", status_code=status.HTTP_200_OK, response_model=HttpDetail)
+async def delete_user(user_uuid: UUID, db: AsyncSession = Depends(get_session)):
+    check_user = await crud.get_user_query(user_uuid, db)
+    if not check_user:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, 'User not found')
+    
+    await crud.delete_user_query(user_uuid, db)
+    
+    return HttpDetail(detail= 'User deleted successfully')
 
