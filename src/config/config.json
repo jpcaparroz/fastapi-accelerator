@@ -1,0 +1,23 @@
+{
+    "server": {
+        "app": "main:app",
+        "host": "localhost",
+        "port": 8000,
+        "log_level": "info",
+        "reload": true,
+        "workers": 4
+    },
+    "database": {
+        "drivername": "postgresql+asyncpg",
+        "username": "postgres",
+        "password": "postgres",
+        "host": "localhost",
+        "port": 5432,
+        "database": "postgres"
+    },
+    "security": {
+        "jwt_secret": "",
+        "algorithm": "HS256",
+        "token_expire_minutes": 60
+    }
+}
