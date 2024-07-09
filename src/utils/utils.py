@@ -16,12 +16,12 @@ def get_env(env_name: str) -> str:
 
 def get_env_database_config() -> dict:
     config = {
-        "drivername": os.getenv('DB_DRIVERNAME'),
-        "username": os.getenv('DB_USERNAME'),
-        "password": os.getenv('DB_PASSWORD'),
-        "host": os.getenv('DB_HOST'),
-        "port": int(os.getenv('DB_PORT')),
-        "database": os.getenv('DB_NAME')
+        "drivername": os.getenv('POSTGRES_DRIVERNAME'),
+        "username": os.getenv('POSTGRES_USER'),
+        "password": os.getenv('POSTGRES_PASSWORD'),
+        "host": os.getenv('POSTGRES_HOST'),
+        "port": int(os.getenv('POSTGRES_PORT')),
+        "database": os.getenv('POSTGRES_NAME')
     }
     return config
 
