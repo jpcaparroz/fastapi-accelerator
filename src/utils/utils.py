@@ -1,24 +1,37 @@
 import os
-import json
+from pathlib import Path
 
-from typing import Literal
-from typing import Union
-
-
-CONFIG_PATH = f'{os.getcwd()}\src\config\config.json'
+from dotenv import load_dotenv
 
 
-def get_config(section: Literal['server', 'database', 'security'], 
-               key: str = None) -> Union[dict, str]:
-    result: str
-    
-    with open(CONFIG_PATH) as op:
-        config = json.load(op)
+ENV_PATH = Path(f'{os.getcwd()}/.env')
+load_dotenv(dotenv_path=ENV_PATH)
 
-    if not key:
-        result = config.get(section)
-    else:
-        result = config.get(section).get(key)
-        
-    return result
+
+def get_env(env_name: str) -> str:
+    return os.getenv(env_name)
+
+
+def get_env_database_config() -> dict:
+    config = {
+        "drivername": os.getenv('DB_DRIVERNAME'),
+        "username": os.getenv('DB_USERNAME'),
+        "password": os.getenv('DB_PASSWORD'),
+        "host": os.getenv('DB_HOST'),
+        "port": int(os.getenv('DB_PORT')),
+        "database": os.getenv('DB_NAME')
+    }
+    return config
+
+
+def get_env_fastapi_config() -> dict:
+    config = {
+        "app": os.getenv('FAST_API_APP'),
+        "host": os.getenv('FAST_API_HOST'),
+        "port": int(os.getenv('FAST_API_PORT')),
+        "log_level": os.getenv('FAST_API_LOG_LEVEL'),
+        "reload": os.getenv('FAST_API_RELOAD'),
+        "workers": int(os.getenv('FAST_API_WORKERS'))
+    }
+    return config
 
