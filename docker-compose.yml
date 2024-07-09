@@ -1,0 +1,37 @@
+services:
+  api_db:
+    image: postgres:latest
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_PASSWORD}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+
+  api_app:
+    build:
+      context: .
+    env_file:
+      - .env
+    environment:
+      - FAST_API_APP=${FAST_API_APP}
+      - FAST_API_HOST=${FAST_API_HOST}
+      - FAST_API_PORT=${FAST_API_PORT}
+      - FAST_API_LOG_LEVEL=${FAST_API_LOG_LEVEL}
+      - FAST_API_RELOAD=${FAST_API_RELOAD}
+      - FAST_API_WORKERS=${FAST_API_WORKERS}
+      - DB_DRIVERNAME=${DB_DRIVERNAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - SECURITY_JWT_SECRET=${SECURITY_JWT_SECRET}
+      - SECURITY_ALGORITHM=${SECURITY_ALGORITHM}
+      - SECURITY_TOKEN_EXPIRE_MINUTES=${SECURITY_TOKEN_EXPIRE_MINUTES}
+    ports:
+      - "${FAST_API_PORT}:${FAST_API_PORT}"
+    depends_on:
+      - api_db
