@@ -28,12 +28,12 @@ def get_env_database_config() -> dict:
 
 def get_env_fastapi_config() -> dict:
     config = {
-        "app": os.getenv('FAST_API_APP'),
-        "host": os.getenv('FAST_API_HOST'),
-        "port": int(os.getenv('FAST_API_PORT')),
-        "log_level": os.getenv('FAST_API_LOG_LEVEL'),
-        "reload": strtobool(os.getenv('FAST_API_RELOAD')),
-        "workers": int(os.getenv('FAST_API_WORKERS'))
+        "app": os.getenv('FASTAPI_APP'),
+        "host": os.getenv('FASTAPI_HOST'),
+        "port": int(os.getenv('FASTAPI_PORT')),
+        "log_level": os.getenv('FASTAPI_LOG_LEVEL'),
+        "reload": strtobool(os.getenv('FASTAPI_RELOAD')),
+        "workers": int(os.getenv('FASTAPI_WORKERS'))
     }
     return config
 
