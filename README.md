@@ -30,35 +30,28 @@ To start using or developing, install the necessary libraries using the commands
     ```
 
 
-## ⚙️ Config Parameters
+## ⚙️ Env Parameters
 
-To initiate API service, the archive `config.json` must be fill, like below:
+To initiate API service, the archive `.env` must be fill, like below:
 
-[config.json](/src/config/config.json)
+[.env](/.env)
 ```
-{
-    "server": {
-        "app": "main:app",                      # [string] Main route
-        "host": "localhost",                    # [string] IP address
-        "port": 8000,                           # [int] Port number
-        "log_level": "info",                    # [string] Log level fastapi parameter
-        "reload": true,                         # [bool] Reloaded app fastapi parameter
-        "workers": 4                            # [int] Workers fastapi parameter
-    },
-    "database": {
-        "drivername": "postgresql+asyncpg",     # [string] Database drivername
-        "username": "postgres",                 # [string] Database username
-        "password": "postgres",                 # [string] Database user password
-        "host": "localhost",                    # [string] Database address
-        "port": 5432,                           # [int] Database port number
-        "database": "postgres"                  # [string] Database name
-    },
-    "security": {
-        "jwt_secret": "",                       # [string] JWT secret (create then with secrets *tutorial below*)
-        "algorithm": "HS256",                   # [string] Secret algorithm
-        "token_expire_minutes": 60              # [int] Token expiration time
-    }
-}
+APP_CONTAINER_NAME=api_app                                         # [string] App conatiner name
+FAST_API_APP=main:app                                              # [string] Main route
+FAST_API_HOST=0.0.0.0                                              # [string] IP address
+FAST_API_PORT=8080                                                 # [int] Port number
+FAST_API_LOG_LEVEL=info                                            # [string] Log level fastapi parameter
+FAST_API_RELOAD=false                                              # [bool] Reloaded app fastapi parameter
+FAST_API_WORKERS=4                                                 # [int] Workers fastapi parameter
+POSTGRES_DRIVERNAME=postgresql+asyncpg                             # [string] Database drivername 
+POSTGRES_USER=postgres                                             # [string] Database username
+POSTGRES_PASSWORD=postgres                                         # [string] Database user password
+POSTGRES_HOST=api_db                                               # [string] Database address
+POSTGRES_PORT=5432                                                 # [int] Database port number
+POSTGRES_NAME=postgres                                             # [string] Database name
+SECURITY_JWT_SECRET=X4NSg2eVgapaKspKHhp5MR23Z-HmshpZfMY_2L9oLQQ    # [string] JWT secret (create then with secrets *tutorial below*)
+SECURITY_ALGORITHM=HS256                                           # [string] Secret algorithm
+SECURITY_TOKEN_EXPIRE_MINUTES=60                                   # [int] Token expiration time (in minutes)
 ```
 
 
