@@ -37,12 +37,12 @@ To initiate API service, the archive `.env` must be fill, like below:
 [.env](/.env)
 ```
 APP_CONTAINER_NAME=api_app                                         # [string] App conatiner name
-FASTAPI_APP=main:app                                              # [string] Main route
-FASTAPI_HOST=0.0.0.0                                              # [string] IP address
-FASTAPI_PORT=8080                                                 # [int] Port number
-FASTAPI_LOG_LEVEL=info                                            # [string] Log level fastapi parameter
-FASTAPI_RELOAD=false                                              # [bool] Reloaded app fastapi parameter
-FASTAPI_WORKERS=4                                                 # [int] Workers fastapi parameter
+FASTAPI_APP=main:app                                               # [string] Main route
+FASTAPI_HOST=0.0.0.0                                               # [string] IP address
+FASTAPI_PORT=8080                                                  # [int] Port number
+FASTAPI_LOG_LEVEL=info                                             # [string] Log level fastapi parameter
+FASTAPI_RELOAD=false                                               # [bool] Reloaded app fastapi parameter
+FASTAPI_WORKERS=4                                                  # [int] Workers fastapi parameter
 POSTGRES_DRIVERNAME=postgresql+asyncpg                             # [string] Database drivername 
 POSTGRES_USER=postgres                                             # [string] Database username
 POSTGRES_PASSWORD=postgres                                         # [string] Database user password
