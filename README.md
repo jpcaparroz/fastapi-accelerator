@@ -1,6 +1,7 @@
 # FastAPI Accelerator
-Python FastAPI Accelerator
+Python FastAPI + PostgresSQL Accelerator
 
+---
 
 ## 🔩 Requirements
 
@@ -9,6 +10,7 @@ Python FastAPI Accelerator
 - Docker
 - Postgres
 
+<br> 
 
 ## 🟢 Initiate
 To start using or developing, install the necessary libraries using the commands:
@@ -29,38 +31,33 @@ To start using or developing, install the necessary libraries using the commands
     .\.venv\Scripts\activate
     ```
 
+<br> 
 
-## ⚙️ Config Parameters
+## ⚙️ Env Parameters
 
-To initiate API service, the archive `config.json` must be fill, like below:
+To initiate API service, the archive `.env` must be fill, like below:
 
-[config.json](/src/config/config.json)
+[.env](/.env)
 ```
-{
-    "server": {
-        "app": "main:app",                      # [string] Main route
-        "host": "localhost",                    # [string] IP address
-        "port": 8000,                           # [int] Port number
-        "log_level": "info",                    # [string] Log level fastapi parameter
-        "reload": true,                         # [bool] Reloaded app fastapi parameter
-        "workers": 4                            # [int] Workers fastapi parameter
-    },
-    "database": {
-        "drivername": "postgresql+asyncpg",     # [string] Database drivername
-        "username": "postgres",                 # [string] Database username
-        "password": "postgres",                 # [string] Database user password
-        "host": "localhost",                    # [string] Database address
-        "port": 5432,                           # [int] Database port number
-        "database": "postgres"                  # [string] Database name
-    },
-    "security": {
-        "jwt_secret": "",                       # [string] JWT secret (create then with secrets *tutorial below*)
-        "algorithm": "HS256",                   # [string] Secret algorithm
-        "token_expire_minutes": 60              # [int] Token expiration time
-    }
-}
+APP_CONTAINER_NAME=api_app                                         # [string] App conatiner name
+FASTAPI_APP=main:app                                               # [string] Main route
+FASTAPI_HOST=0.0.0.0                                               # [string] IP address
+FASTAPI_PORT=8080                                                  # [int] Port number
+FASTAPI_LOG_LEVEL=info                                             # [string] Log level fastapi parameter
+FASTAPI_RELOAD=false                                               # [bool] Reloaded app fastapi parameter
+FASTAPI_WORKERS=4                                                  # [int] Workers fastapi parameter
+POSTGRES_DRIVERNAME=postgresql+asyncpg                             # [string] Database drivername 
+POSTGRES_USER=postgres                                             # [string] Database username
+POSTGRES_PASSWORD=postgres                                         # [string] Database user password
+POSTGRES_HOST=api_db                                               # [string] Database address
+POSTGRES_PORT=5432                                                 # [int] Database port number
+POSTGRES_NAME=postgres                                             # [string] Database name
+SECURITY_JWT_SECRET=X4NSg2eVgapaKspKHhp5MR23Z-HmshpZfMY_2L9oLQQ    # [string] JWT secret (create then with secrets *tutorial below*)
+SECURITY_ALGORITHM=HS256                                           # [string] Secret algorithm
+SECURITY_TOKEN_EXPIRE_MINUTES=60                                   # [int] Token expiration time (in minutes)
 ```
 
+<br> 
 
 ## 🔐 JWT Secret
 To ensure user password security, create a JWT by following the steps below:
@@ -70,6 +67,7 @@ import secrets
 token: str = secrets.token_urlsafe(32)
 ```
 
+<br> 
 
 ## 🧪 Tests
 
@@ -106,11 +104,27 @@ pytest
 pytest -q -m "<tags>" -c .\tests\pytest.ini
 ```
 
+<br> 
+
+## 🚀 Deploy (gcloud example)
+
+Build and push for google cloud run example
+
+```
+docker build -t fastapi-accelerator . --tag <repo>/<project>/fastapi-accelerator:latest
+```
+
+```
+docker push <repo>/<project>/fastapi-accelerator:latest
+```
+
+<br> 
 
 ## ⚠️ Important
 
 - Make sure all dependencies are installed correctly.
 
+<br> 
 
 ## 🤝 Colaborators
 
@@ -127,6 +141,7 @@ pytest -q -m "<tags>" -c .\tests\pytest.ini
   </tr>
 </table>
 
+<br>
 
 ## 😄 Contribute
 

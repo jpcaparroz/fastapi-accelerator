@@ -6,6 +6,8 @@ COPY ./docs/requirements.txt /code/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-COPY ./src /code/app
+COPY ./src /code/src
 
-CMD ["python", ".\code\app\src\main.py"]
+EXPOSE 8080
+
+CMD python /code/src/main.py
