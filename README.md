@@ -1,6 +1,7 @@
 # FastAPI Accelerator
-Python FastAPI Accelerator
+Python FastAPI + PostgresSQL Accelerator
 
+---
 
 ## 🔩 Requirements
 
@@ -9,6 +10,7 @@ Python FastAPI Accelerator
 - Docker
 - Postgres
 
+<br> 
 
 ## 🟢 Initiate
 To start using or developing, install the necessary libraries using the commands:
@@ -29,6 +31,7 @@ To start using or developing, install the necessary libraries using the commands
     .\.venv\Scripts\activate
     ```
 
+<br> 
 
 ## ⚙️ Env Parameters
 
@@ -54,6 +57,7 @@ SECURITY_ALGORITHM=HS256                                           # [string] Se
 SECURITY_TOKEN_EXPIRE_MINUTES=60                                   # [int] Token expiration time (in minutes)
 ```
 
+<br> 
 
 ## 🔐 JWT Secret
 To ensure user password security, create a JWT by following the steps below:
@@ -63,6 +67,7 @@ import secrets
 token: str = secrets.token_urlsafe(32)
 ```
 
+<br> 
 
 ## 🧪 Tests
 
@@ -99,11 +104,27 @@ pytest
 pytest -q -m "<tags>" -c .\tests\pytest.ini
 ```
 
+<br> 
+
+## 🚀 Deploy (gcloud example)
+
+Build and push for google cloud run example
+
+```
+docker build -t fastapi-accelerator . --tag <repo>/<project>/fastapi-accelerator:latest
+```
+
+```
+docker push <repo>/<project>/fastapi-accelerator:latest
+```
+
+<br> 
 
 ## ⚠️ Important
 
 - Make sure all dependencies are installed correctly.
 
+<br> 
 
 ## 🤝 Colaborators
 
@@ -120,6 +141,7 @@ pytest -q -m "<tags>" -c .\tests\pytest.ini
   </tr>
 </table>
 
+<br>
 
 ## 😄 Contribute
 
