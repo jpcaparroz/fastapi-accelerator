@@ -23,30 +23,31 @@ def get_db_url() -> str:
     host: str = os.getenv('POSTGRES_HOST')
     port: int = int(os.getenv('POSTGRES_PORT'))
     database: str = os.getenv('POSTGRES_NAME')
+    
+    config: dict = {
+        "drivername": drivername,
+        "username": username,
+        "password": password,
+        "host": host,
+        "port": port,
+        "database": database
+    }
 
     if "INSTANCE_UNIX_SOCKET" in os.environ:
+        config.pop('port')
+        config.pop('host')
         unix_socket_path = os.environ.get("INSTANCE_UNIX_SOCKET")
-        print("*************************************")
-        print(f"{drivername}://{username}:{password}@/{database}?unix_sock={unix_socket_path}/.s.PGSQL.5432")
-        print("*************************************")
-        return f"{drivername}://{username}:{password}@/{database}?unix_sock={unix_socket_path}/.s.PGSQL.5432"
-    else:
-        config = {
-            "drivername": drivername,
-            "username": username,
-            "password": password,
-            "host": host,
-            "port": port,
-            "database": database
+        query: dict = {
+            "host": "/cloudsql/{}/.s.PGSQL.5432".format(unix_socket_path)
         }
-        print("*************************************")
-        print(config)
-        print("*************************************")
-        return URL.create(**config).render_as_string(hide_password=False)
+
+        config['query'] = query
+
+    return URL.create(**config).render_as_string(hide_password=False)
 
 
 def get_env_fastapi_config() -> dict:
-    config = {
+    config: dict = {
         "app": os.getenv('FASTAPI_APP'),
         "host": os.getenv('FASTAPI_HOST'),
         "port": int(os.getenv('FASTAPI_PORT')),
@@ -54,8 +55,5 @@ def get_env_fastapi_config() -> dict:
         "reload": strtobool(os.getenv('FASTAPI_RELOAD')),
         "workers": int(os.getenv('FASTAPI_WORKERS'))
     }
-    print("*************************************")
-    print(config)
-    print("*************************************")
     return config
 
